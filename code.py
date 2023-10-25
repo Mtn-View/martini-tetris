@@ -3,6 +3,7 @@ import board
 import displayio
 from adafruit_matrixportal.matrixportal import MatrixPortal
 from blocks import get_random_block
+from colors import get_random_color
 
 
 matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
@@ -11,12 +12,12 @@ matrixportal = MatrixPortal(status_neopixel=board.NEOPIXEL, debug=True)
 group = displayio.Group()
 
 # Create a new Bitmap object
-bitmap = displayio.Bitmap(matrixportal.display.width, matrixportal.display.height, 1)
+bitmap = displayio.Bitmap(128, matrixportal.display.height, 1)
 
 # Create a new Palette object with a single color
 palette = displayio.Palette(2)
 palette[0] = 0x000000  # Black
-palette[1] = 0xFFFFFF  # White
+palette[1] = get_random_color()  # Block
 
 # Create a new TileGrid object using the Bitmap and Palette objects
 tile_grid = displayio.TileGrid(bitmap, pixel_shader=palette)
@@ -77,7 +78,7 @@ while True:
 		# New block
 		tetris_block = get_random_block()
 		tetris_size=len(tetris_block[0])
-
+		palette[1] = get_random_color()  # Block
 
 	# Draw the updated tetris block
 	draw_tetris_block(tetris_block)
